@@ -1,199 +1,225 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QuantPulse | Institutional Algo Engine</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts & Lucide Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace']
-          },
-          colors: {
-            brandDark: '#0B0E14',
-            brandCard: '#151922',
-            brandBorder: '#232936',
-            brandGreen: '#00F090',
-            brandRed: '#FF4757',
-            brandGold: '#F5A623',
-            brandBlue: '#00A8FF'
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    body { background-color: #0B0E14; }
-  </style>
-</head>
-<body class="text-slate-300 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-brandGreen selection:text-black">
+import os
+import time
+import threading
+import requests
+import pandas as pd
+import numpy as np
+from datetime import datetime
+from http.server import HTTPServer, BaseHTTPRequestHandler
 
-  <!-- NAVBAR -->
-  <header class="border-b border-brandBorder/80 bg-brandDark/80 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brandGreen/20 to-emerald-500/40 border border-brandGreen/40 flex items-center justify-center text-brandGreen font-bold text-xl shadow-lg">
-          ⚡
-        </div>
-        <div>
-          <span class="text-white font-extrabold text-xl tracking-tight">QuantPulse<span class="text-brandGreen">.</span>work</span>
-          <span class="block text-[10px] uppercase font-mono tracking-widest text-slate-500">Trade with Ankit</span>
-        </div>
-      </div>
-      <div class="flex items-center gap-4">
-        <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-brandCard border border-brandBorder text-xs font-mono">
-          <span class="w-2 h-2 rounded-full bg-brandGreen animate-ping"></span>
-          <span class="text-slate-300">Live Scanners Active</span>
-        </div>
-        <!-- UPDATED TELEGRAM LINK -->
-        <a href="https://t.me/+QuDsbvz_kCc2MjQ1" target="_blank" class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-brandGreen text-brandDark font-bold text-sm hover:brightness-110 transition shadow-lg shadow-brandGreen/20">
-          <i data-lucide="send" class="w-4 h-4"></i> Join Telegram
-        </a>
-      </div>
-    </div>
-  </header>
+# ----------------- CONFIGURATION -----------------
+TELEGRAM_BOT_TOKEN = "8608122374:AAF5OXFFo4pKrhda8RyThOCs9dN0zkd0V14"
+PRIMARY_CHAT_ID    = "-5269160911"
+SECONDARY_CHAT_ID  = "-1005269160911"
 
-  <!-- HERO SECTION -->
-  <section class="max-w-7xl mx-auto px-6 pt-16 pb-12 text-center relative">
-    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brandCard border border-brandBorder text-xs text-slate-400 font-mono mb-6">
-      <span class="text-brandGreen">●</span> SMC Architecture & High-Frequency ORB Engine
-    </div>
-    <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight max-w-4xl mx-auto leading-tight">
-      Institutional Signals for <span class="bg-gradient-to-r from-brandGold via-yellow-200 to-amber-500 bg-clip-text text-transparent">Gold</span>, <span class="bg-gradient-to-r from-brandBlue to-cyan-300 bg-clip-text text-transparent">Crypto</span> & <span class="bg-gradient-to-r from-brandGreen to-emerald-400 bg-clip-text text-transparent">Nifty</span>.
-    </h1>
-    <p class="mt-6 text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
-      Continuous execution engine tracking liquidity sweeps, momentum breakout, and dynamic structure shifts in real time.
-    </p>
+CRYPTO_SYMBOLS = ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+COOLDOWN_MINUTES = 35
 
-    <!-- KEY STATS STRIP -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-12">
-      <div class="p-4 rounded-2xl bg-brandCard border border-brandBorder text-left">
-        <p class="text-xs uppercase font-mono text-slate-500">Average Win-Rate</p>
-        <p class="text-2xl font-extrabold text-white mt-1 font-mono">64.8%</p>
-      </div>
-      <div class="p-4 rounded-2xl bg-brandCard border border-brandBorder text-left">
-        <p class="text-xs uppercase font-mono text-slate-500">Risk-to-Reward</p>
-        <p class="text-2xl font-extrabold text-brandGreen mt-1 font-mono">1:2.0 Min</p>
-      </div>
-      <div class="p-4 rounded-2xl bg-brandCard border border-brandBorder text-left">
-        <p class="text-xs uppercase font-mono text-slate-500">Execution Delay</p>
-        <p class="text-2xl font-extrabold text-brandBlue mt-1 font-mono">&lt; 350ms</p>
-      </div>
-      <div class="p-4 rounded-2xl bg-brandCard border border-brandBorder text-left">
-        <p class="text-xs uppercase font-mono text-slate-500">Scanning Uptime</p>
-        <p class="text-2xl font-extrabold text-brandGold mt-1 font-mono">24/7/365</p>
-      </div>
-    </div>
-  </section>
+last_gold_signal_time = 0
+last_crypto_signal = {s: 0 for s in CRYPTO_SYMBOLS}
 
-  <!-- LIVE SIGNALS BOARD -->
-  <section class="max-w-7xl mx-auto px-6 py-8 w-full">
-    <div class="flex items-center justify-between mb-6">
-      <div>
-        <h2 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-          <i data-lucide="radio" class="w-6 h-6 text-brandGreen animate-pulse"></i> Terminal Signals Stream
-        </h2>
-        <p class="text-xs text-slate-500 font-mono mt-1">Live algorithmic alerts delivered to group</p>
-      </div>
-      <span class="text-xs font-mono text-slate-500">Refreshed: Auto 5s</span>
-    </div>
+def send_telegram_alert(message):
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    
+    # Try primary ID first
+    payload = {"chat_id": PRIMARY_CHAT_ID, "text": message, "parse_mode": "Markdown"}
+    try:
+        res = requests.post(url, data=payload, timeout=8).json()
+        if not res.get("ok"):
+            # Fallback to secondary ID
+            payload["chat_id"] = SECONDARY_CHAT_ID
+            requests.post(url, data=payload, timeout=8)
+    except Exception as e:
+        print(f"Telegram Alert Error: {e}", flush=True)
 
-    <!-- CARDS GRID -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Card 1: Gold -->
-      <div class="rounded-2xl bg-brandCard border border-brandBorder p-6 hover:border-brandGold/40 transition">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-brandGold text-sm">Au</span>
-            <span class="font-bold text-white">XAU/USD (Gold)</span>
-          </div>
-          <span class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-brandRed/10 text-brandRed border border-brandRed/20">SELL (SHORT)</span>
-        </div>
-        <div class="space-y-2 text-sm font-mono my-4 bg-brandDark/50 p-4 rounded-xl border border-brandBorder">
-          <div class="flex justify-between"><span class="text-slate-500">Entry:</span> <span class="text-white font-bold">$4,131.31</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Stop Loss:</span> <span class="text-brandRed">$4,135.91</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Target 1:</span> <span class="text-brandGreen">$4,126.71</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Target 2:</span> <span class="text-brandGreen">$4,123.03</span></div>
-        </div>
-        <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-2 border-t border-brandBorder">
-          <span>Setup: 15m BOS Trend</span>
-          <span class="text-brandGreen">● Target Hit (Full)</span>
-        </div>
-      </div>
+# =====================================================================
+# MODULE 1: SPOT GOLD (XAU/USD) - COINBASE REST ENGINE
+# =====================================================================
+def fetch_gold_candles(granularity=300):
+    url = f"https://api.exchange.coinbase.com/products/PAXG-USD/candles?granularity={granularity}"
+    headers = {"User-Agent": "Mozilla/5.0", "Accept": "application/json"}
+    try:
+        res = requests.get(url, headers=headers, timeout=8)
+        if res.status_code == 200:
+            raw = res.json()
+            if isinstance(raw, list) and len(raw) >= 20:
+                raw = raw[::-1][:-1]
+                records = [{"timestamp": int(k[0]), "low": float(k[1]), "high": float(k[2]),
+                            "open": float(k[3]), "close": float(k[4]), "volume": float(k[5])} for k in raw]
+                return pd.DataFrame(records)
+    except Exception as e:
+        print(f"Gold Feed Error: {e}", flush=True)
+    return None
 
-      <!-- Card 2: Nifty 50 -->
-      <div class="rounded-2xl bg-brandCard border border-brandBorder p-6 hover:border-brandGreen/40 transition">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center font-bold text-brandGreen text-sm">₹</span>
-            <span class="font-bold text-white">NIFTY 50 22650 PE</span>
-          </div>
-          <span class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-brandRed/10 text-brandRed border border-brandRed/20">BUY PUT</span>
-        </div>
-        <div class="space-y-2 text-sm font-mono my-4 bg-brandDark/50 p-4 rounded-xl border border-brandBorder">
-          <div class="flex justify-between"><span class="text-slate-500">Spot Level:</span> <span class="text-white font-bold">₹22,593.40</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Option SL:</span> <span class="text-brandRed">-20 Pts</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Option Target:</span> <span class="text-brandGreen">+40 Pts</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Risk-to-Reward:</span> <span class="text-brandGreen">1:2.0 Fixed</span></div>
-        </div>
-        <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-2 border-t border-brandBorder">
-          <span>Setup: 15m ORB + 9 EMA</span>
-          <span class="text-brandGreen">● Target Hit (+40 pts)</span>
-        </div>
-      </div>
+def check_gold_price_action(df_5m, df_15m):
+    if df_5m is None or len(df_5m) < 20 or df_15m is None or len(df_15m) < 20:
+        return None
 
-      <!-- Card 3: Crypto -->
-      <div class="rounded-2xl bg-brandCard border border-brandBorder p-6 hover:border-brandBlue/40 transition">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center font-bold text-brandBlue text-sm">₿</span>
-            <span class="font-bold text-white">BTC/USD (Bitcoin)</span>
-          </div>
-          <span class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-brandGreen/10 text-brandGreen border border-brandGreen/20">BUY (LONG)</span>
-        </div>
-        <div class="space-y-2 text-sm font-mono my-4 bg-brandDark/50 p-4 rounded-xl border border-brandBorder">
-          <div class="flex justify-between"><span class="text-slate-500">Entry:</span> <span class="text-white font-bold">$85,570.00</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Stop Loss:</span> <span class="text-brandRed">$85,380.00</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Target 1:</span> <span class="text-brandGreen">$85,855.00</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Target 2:</span> <span class="text-brandGreen">$86,140.00</span></div>
-        </div>
-        <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-2 border-t border-brandBorder">
-          <span>Setup: SMC Liquidity Sweep</span>
-          <span class="text-brandBlue">● Runner Active</span>
-        </div>
-      </div>
-    </div>
-  </section>
+    recent_15m = df_15m.iloc[-11:-1]
+    half = len(recent_15m) // 2
+    h1, h2 = recent_15m['high'].iloc[:half].max(), recent_15m['high'].iloc[half:].max()
+    l1, l2 = recent_15m['low'].iloc[:half].min(), recent_15m['low'].iloc[half:].min()
 
-  <!-- CTA BANNER -->
-  <section class="max-w-5xl mx-auto px-6 py-12 text-center w-full">
-    <div class="rounded-3xl bg-gradient-to-b from-brandCard to-brandBorder p-10 border border-brandBorder">
-      <h2 class="text-3xl font-extrabold text-white mb-4">Join Trade with Ankit</h2>
-      <p class="text-slate-400 max-w-xl mx-auto text-sm mb-8">
-        Get direct alerts for Gold, Nifty, and Crypto straight into your Telegram app.
-      </p>
-      <!-- UPDATED TELEGRAM LINK -->
-      <a href="https://t.me/+QuDsbvz_kCc2MjQ1" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-brandGreen text-brandDark font-extrabold text-base hover:brightness-110 transition shadow-xl shadow-brandGreen/25">
-        <i data-lucide="send" class="w-5 h-5"></i> Join Telegram Group
-      </a>
-    </div>
-  </section>
+    macro_bias = "BULLISH" if (h2 > h1 and l2 >= l1) else ("BEARISH" if (l2 < l1 and h2 <= h1) else "BULLISH")
 
-  <!-- FOOTER -->
-  <footer class="border-t border-brandBorder py-8 bg-brandDark text-center text-xs font-mono text-slate-600">
-    <p>© 2026 QuantPulse Engine. Algorithmic trade models. Not SEBI registered financial advice.</p>
-  </footer>
+    window = df_5m.iloc[-7:-1]
+    swing_high = round(float(window['high'].max()), 2)
+    swing_low = round(float(window['low'].min()), 2)
+    curr = df_5m.iloc[-1]
+    curr_price = round(float(curr['close']), 2)
 
-  <script>
-    lucide.createIcons();
-  </script>
-</body>
-</html>
+    # Gold BUY Breakout
+    if macro_bias == "BULLISH" and curr_price > swing_high and (curr['close'] > curr['open']):
+        sl = round(swing_low - 0.40, 2)
+        risk = round(curr_price - sl, 2)
+        if 2.0 <= risk <= 4.8:
+            return {"asset": "GOLD (XAU/USD)", "side": "BUY (LONG)", "icon": "🟢", "entry": curr_price,
+                    "sl": sl, "tp1": round(curr_price + risk, 2), "tp2": round(curr_price + (risk * 1.8), 2),
+                    "risk": risk, "pivot": swing_high, "bias": macro_bias}
+
+    # Gold SELL Breakdown
+    if macro_bias == "BEARISH" and curr_price < swing_low and (curr['close'] < curr['open']):
+        sl = round(swing_high + 0.40, 2)
+        risk = round(sl - curr_price, 2)
+        if 2.0 <= risk <= 4.8:
+            return {"asset": "GOLD (XAU/USD)", "side": "SELL (SHORT)", "icon": "🔴", "entry": curr_price,
+                    "sl": sl, "tp1": round(curr_price - risk, 2), "tp2": round(curr_price - (risk * 1.8), 2),
+                    "risk": risk, "pivot": swing_low, "bias": macro_bias}
+
+    return None
+
+def run_gold_loop():
+    global last_gold_signal_time
+    print("🚀 Gold Scanner Active...", flush=True)
+    while True:
+        try:
+            now = time.time()
+            if (now - last_gold_signal_time) >= (COOLDOWN_MINUTES * 60):
+                df_5m = fetch_gold_candles(granularity=300)
+                time.sleep(0.3)
+                df_15m = fetch_gold_candles(granularity=900)
+                setup = check_gold_price_action(df_5m, df_15m)
+                if setup:
+                    last_gold_signal_time = now
+                    msg = (
+                        f"{setup['icon']} *PRICE ACTION: {setup['asset']}* {setup['icon']}\n\n"
+                        f"Action: *{setup['side']}*\n"
+                        f"🔹 *Entry Price:* `${setup['entry']:,.2f}`\n"
+                        f"🛑 *Stop Loss:* `${setup['sl']:,.2f}` (Risk: `${setup['risk']:,.2f}`)\n"
+                        f"🎯 *Target 1 (1:1):* `${setup['tp1']:,.2f}` (Book 70%)\n"
+                        f"🎯 *Target 2 (Runner):* `${setup['tp2']:,.2f}`\n\n"
+                        f"🏛 *Structure Details:*\n"
+                        f"• 15M Trend: *{setup['bias']}*\n"
+                        f"• Broken Pivot: `${setup['pivot']:,.2f}`\n\n"
+                        f"⚡ *Rules:* Target 1 aate hi 70% book karein aur Stop Loss direct Entry par lock karein."
+                    )
+                    send_telegram_alert(msg)
+            time.sleep(15)
+        except Exception as e:
+            print(f"Gold Loop Error: {e}", flush=True)
+            time.sleep(10)
+
+# =====================================================================
+# MODULE 2: CRYPTO PAIRS (BTC / ETH / SOL) - SMC SCANNER
+# =====================================================================
+def fetch_crypto_candles(pair, granularity=900):
+    url = f"https://api.exchange.coinbase.com/products/{pair}/candles?granularity={granularity}"
+    headers = {"User-Agent": "Mozilla/5.0", "Accept": "application/json"}
+    try:
+        res = requests.get(url, headers=headers, timeout=8)
+        if res.status_code == 200:
+            raw = res.json()
+            if isinstance(raw, list) and len(raw) >= 25:
+                raw = raw[::-1][:-1]
+                records = [{"low": float(k[1]), "high": float(k[2]), "open": float(k[3]),
+                            "close": float(k[4]), "volume": float(k[5])} for k in raw]
+                return pd.DataFrame(records)
+    except Exception as e:
+        print(f"Crypto Feed Error ({pair}): {e}", flush=True)
+    return None
+
+def check_crypto_smc(df, pair):
+    if df is None or len(df) < 25:
+        return None
+
+    lookback = df.iloc[-22:-2]
+    key_high, key_low = lookback['high'].max(), lookback['low'].min()
+    sweep, confirm = df.iloc[-2], df.iloc[-1]
+
+    if sweep['high'] > key_high and sweep['close'] < key_high and confirm['close'] < confirm['open']:
+        entry = float(confirm['close'])
+        sl = round(sweep['high'] * 1.0018, 2)
+        risk = round(sl - entry, 2)
+        if risk > 0:
+            return {"pair": pair.replace("-", "/"), "side": "SELL (SHORT)", "icon": "🔴", "entry": entry,
+                    "sl": sl, "tp1": round(entry - (risk * 1.5), 2), "tp2": round(entry - (risk * 3.0), 2),
+                    "risk": risk, "pivot": round(key_high, 2)}
+
+    if sweep['low'] < key_low and sweep['close'] > key_low and confirm['close'] > confirm['open']:
+        entry = float(confirm['close'])
+        sl = round(sweep['low'] * 0.9982, 2)
+        risk = round(entry - sl, 2)
+        if risk > 0:
+            return {"pair": pair.replace("-", "/"), "side": "BUY (LONG)", "icon": "🟢", "entry": entry,
+                    "sl": sl, "tp1": round(entry + (risk * 1.5), 2), "tp2": round(entry + (risk * 3.0), 2),
+                    "risk": risk, "pivot": round(key_low, 2)}
+
+    return None
+
+def run_crypto_loop():
+    global last_crypto_signal
+    print("🚀 Crypto SMC Scanner Active...", flush=True)
+    cb_pairs = {"BTCUSDT": "BTC-USD", "ETHUSDT": "ETH-USD", "SOLUSDT": "SOL-USD"}
+    while True:
+        try:
+            now = time.time()
+            for sym, cb_pair in cb_pairs.items():
+                if (now - last_crypto_signal[sym]) < (COOLDOWN_MINUTES * 60):
+                    continue
+                df = fetch_crypto_candles(cb_pair, granularity=900)
+                setup = check_crypto_smc(df, cb_pair)
+                if setup:
+                    last_crypto_signal[sym] = now
+                    msg = (
+                        f"{setup['icon']} *SMC SNIPER: {setup['pair']}* {setup['icon']}\n\n"
+                        f"Action: *{setup['side']}*\n"
+                        f"🔹 *Entry Price:* `${setup['entry']:,.2f}`\n"
+                        f"🛑 *Stop Loss:* `${setup['sl']:,.2f}` (Risk: `${setup['risk']:,.2f}`)\n"
+                        f"🎯 *Target 1 (1:1.5):* `${setup['tp1']:,.2f}` (Safe 60% Book)\n"
+                        f"🎯 *Target 2 (1:3.0):* `${setup['tp2']:,.2f}`\n\n"
+                        f"🧠 *Smart Money Footprint:*\n"
+                        f"• Swept Liquidity Pivot: `${setup['pivot']:,.2f}`\n\n"
+                        f"⚡ *Rule:* Target 1 hit hote hi Stop Loss direct Entry par lock karein."
+                    )
+                    send_telegram_alert(msg)
+                    time.sleep(1)
+                time.sleep(0.5)
+            time.sleep(20)
+        except Exception as e:
+            print(f"Crypto Loop Error: {e}", flush=True)
+            time.sleep(10)
+
+# =====================================================================
+# HEALTHCHECK HTTP SERVER
+# =====================================================================
+class HealthCheckHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+        self.wfile.write(b"Trade With Ankit Engine Live 24/7!")
+
+    def log_message(self, format, *args):
+        return
+
+def run_server():
+    port = int(os.environ.get("PORT", 8080))
+    server = HTTPServer(('0.0.0.0', port), HealthCheckHandler)
+    server.serve_forever()
+
+if __name__ == "__main__":
+    t1 = threading.Thread(target=run_gold_loop, daemon=True)
+    t1.start()
+    t2 = threading.Thread(target=run_crypto_loop, daemon=True)
+    t2.start()
+    run_server()
