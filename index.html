@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QuantPulse | Institutional Algo Engine</title>
+  <title>QuantPulse Algo Terminal | Premium Trading Bots</title>
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Google Fonts & Lucide Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
     tailwind.config = {
@@ -16,11 +18,10 @@
             mono: ['"JetBrains Mono"', 'monospace']
           },
           colors: {
-            brandDark: '#0B0E14',
-            brandCard: '#151922',
-            brandBorder: '#232936',
+            brandDark: '#0A0D14',
+            brandCard: '#131823',
+            brandBorder: '#202738',
             brandGreen: '#00F090',
-            brandRed: '#FF4757',
             brandGold: '#F5A623',
             brandBlue: '#00A8FF'
           }
@@ -29,162 +30,235 @@
     }
   </script>
   <style>
-    body { background-color: #0B0E14; }
+    body { background-color: #0A0D14; }
+    .glow-green { box-shadow: 0 0 35px rgba(0, 240, 144, 0.2); }
   </style>
 </head>
-<body class="text-slate-300 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-brandGreen selection:text-black">
+<body class="text-slate-300 font-sans antialiased min-h-screen selection:bg-brandGreen selection:text-black">
 
   <!-- NAVBAR -->
-  <header class="border-b border-brandBorder/80 bg-brandDark/80 backdrop-blur-md sticky top-0 z-50">
+  <header class="border-b border-brandBorder/80 bg-brandDark/90 backdrop-blur-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brandGreen/20 to-emerald-500/40 border border-brandGreen/40 flex items-center justify-center text-brandGreen font-bold text-xl shadow-lg">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brandGreen/20 to-emerald-500/40 border border-brandGreen/40 flex items-center justify-center text-brandGreen font-bold text-xl shadow-lg">
           ⚡
         </div>
         <div>
-          <span class="text-white font-extrabold text-xl tracking-tight">QuantPulse<span class="text-brandGreen">.</span>work</span>
+          <span class="text-white font-black text-xl tracking-tight">QuantPulse<span class="text-brandGreen">.</span>work</span>
           <span class="block text-[10px] uppercase font-mono tracking-widest text-slate-500">Trade with Ankit</span>
         </div>
       </div>
       <div class="flex items-center gap-4">
-        <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-brandCard border border-brandBorder text-xs font-mono">
-          <span class="w-2 h-2 rounded-full bg-brandGreen animate-ping"></span>
-          <span class="text-slate-300">Live Scanners Active</span>
-        </div>
-        <a href="https://t.me/+QuDsbvz_kCc2MjQ1" target="_blank" class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-brandGreen text-brandDark font-bold text-sm hover:brightness-110 transition shadow-lg shadow-brandGreen/20">
-          <i data-lucide="send" class="w-4 h-4"></i> Join Telegram
+        <a href="https://t.me/+QuDsbvz_kCc2MjQ1" target="_blank" class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-brandGreen text-brandDark font-extrabold text-sm hover:brightness-110 transition shadow-lg shadow-brandGreen/20">
+          <i data-lucide="send" class="w-4 h-4"></i> Buy via Telegram
         </a>
       </div>
     </div>
   </header>
 
   <!-- HERO SECTION -->
-  <section class="max-w-7xl mx-auto px-6 pt-16 pb-12 text-center relative">
-    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brandCard border border-brandBorder text-xs text-slate-400 font-mono mb-6">
-      <span class="text-brandGreen">●</span> SMC Architecture & High-Frequency ORB Engine
+  <section class="max-w-7xl mx-auto px-6 pt-20 pb-16 text-center relative">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brandCard border border-brandBorder text-xs text-brandGreen font-mono mb-8 glow-green">
+      <span>●</span> 2026 Institutional Trading Bots Available
     </div>
-    <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight max-w-4xl mx-auto leading-tight">
-      Institutional Signals for <span class="bg-gradient-to-r from-brandGold via-yellow-200 to-amber-500 bg-clip-text text-transparent">Gold</span>, <span class="bg-gradient-to-r from-brandBlue to-cyan-300 bg-clip-text text-transparent">Crypto</span> & <span class="bg-gradient-to-r from-brandGreen to-emerald-400 bg-clip-text text-transparent">Nifty</span>.
+    
+    <h1 class="text-4xl sm:text-7xl font-black text-white tracking-tight max-w-5xl mx-auto leading-tight">
+      Automate Your Edge. <br />
+      <span class="bg-gradient-to-r from-brandGreen via-emerald-300 to-cyan-400 bg-clip-text text-transparent">Zero Emotion. Pure Quant Precision.</span>
     </h1>
-    <p class="mt-6 text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
-      Continuous execution engine tracking liquidity sweeps, momentum breakout, and dynamic structure shifts in real time.
+
+    <p class="mt-8 text-slate-400 text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed">
+      Get access to our battle-tested algorithms for <strong class="text-white">Gold (XAU/USD)</strong>, <strong class="text-white">Crypto (BTC/ETH/SOL)</strong>, and <strong class="text-white">Nifty 50 Options</strong>. Designed for disciplined risk and consistent 1:2+ Risk-Reward setups.
     </p>
 
-    <!-- KEY STATS -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-12">
-      <div class="p-4 rounded-2xl bg-brandCard border border-brandBorder text-left">
-        <p class="text-xs uppercase font-mono text-slate-500">Average Win-Rate</p>
-        <p class="text-2xl font-extrabold text-white mt-1 font-mono">64.8%</p>
+    <!-- CTA BUTTONS -->
+    <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="https://t.me/+QuDsbvz_kCc2MjQ1" target="_blank" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-brandGreen text-brandDark font-black text-base hover:brightness-110 transition shadow-xl shadow-brandGreen/25 flex items-center justify-center gap-3">
+        <i data-lucide="zap" class="w-5 h-5"></i> Get Bot Access (Join VIP Telegram)
+      </a>
+      <a href="#pricing" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-brandCard border border-brandBorder text-white font-bold text-base hover:border-slate-500 transition flex items-center justify-center gap-2">
+        View Pricing & Plans <i data-lucide="arrow-down" class="w-4 h-4"></i>
+      </a>
+    </div>
+
+    <!-- METRICS -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mt-16 text-left">
+      <div class="p-6 rounded-2xl bg-brandCard border border-brandBorder">
+        <span class="text-xs uppercase font-mono text-slate-500">Backtested Win-Rate</span>
+        <h3 class="text-3xl font-black text-white mt-1 font-mono">68.4%</h3>
+        <p class="text-[11px] text-brandGreen mt-1">Over 1,200+ Executions</p>
       </div>
-      <div class="p-4 rounded-2xl bg-brandCard border border-brandBorder text-left">
-        <p class="text-xs uppercase font-mono text-slate-500">Risk-to-Reward</p>
-        <p class="text-2xl font-extrabold text-brandGreen mt-1 font-mono">1:2.0 Min</p>
+      <div class="p-6 rounded-2xl bg-brandCard border border-brandBorder">
+        <span class="text-xs uppercase font-mono text-slate-500">Risk-to-Reward</span>
+        <h3 class="text-3xl font-black text-brandGreen mt-1 font-mono">1:2 to 1:3</h3>
+        <p class="text-[11px] text-slate-400 mt-1">Strict Mathematical SL</p>
       </div>
-      <div class="p-4 rounded-2xl bg-brandCard border border-brandBorder text-left">
-        <p class="text-xs uppercase font-mono text-slate-500">Execution Delay</p>
-        <p class="text-2xl font-extrabold text-brandBlue mt-1 font-mono">&lt; 350ms</p>
+      <div class="p-6 rounded-2xl bg-brandCard border border-brandBorder">
+        <span class="text-xs uppercase font-mono text-slate-500">Markets Covered</span>
+        <h3 class="text-3xl font-black text-brandGold mt-1 font-mono">Gold / FX / Nifty</h3>
+        <p class="text-[11px] text-slate-400 mt-1">24/7 Scanning Engine</p>
       </div>
-      <div class="p-4 rounded-2xl bg-brandCard border border-brandBorder text-left">
-        <p class="text-xs uppercase font-mono text-slate-500">Scanning Uptime</p>
-        <p class="text-2xl font-extrabold text-brandGold mt-1 font-mono">24/7/365</p>
+      <div class="p-6 rounded-2xl bg-brandCard border border-brandBorder">
+        <span class="text-xs uppercase font-mono text-slate-500">Delivery Channel</span>
+        <h3 class="text-3xl font-black text-brandBlue mt-1 font-mono">Telegram VIP</h3>
+        <p class="text-[11px] text-slate-400 mt-1">Instant Alert Notifications</p>
       </div>
     </div>
   </section>
 
-  <!-- LIVE SIGNALS -->
-  <section class="max-w-7xl mx-auto px-6 py-8 w-full">
-    <div class="flex items-center justify-between mb-6">
-      <div>
-        <h2 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-          <i data-lucide="radio" class="w-6 h-6 text-brandGreen animate-pulse"></i> Terminal Signals Stream
-        </h2>
-        <p class="text-xs text-slate-500 font-mono mt-1">Live algorithmic alerts delivered to group</p>
-      </div>
-      <span class="text-xs font-mono text-slate-500">Refreshed: Auto 5s</span>
+  <!-- BOT FEATURES & STRATEGIES -->
+  <section class="max-w-7xl mx-auto px-6 py-20 border-t border-brandBorder">
+    <div class="text-center mb-16">
+      <span class="text-brandGreen text-xs uppercase font-mono tracking-widest font-bold">Algorithms Included</span>
+      <h2 class="text-3xl sm:text-5xl font-black text-white mt-2">Engineered For High-Probability Setups</h2>
+      <p class="text-slate-400 mt-3 max-w-xl mx-auto text-sm">Every setup calculates automatic Entry, Stop Loss, Target 1, and Runner Targets.</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Gold -->
-      <div class="rounded-2xl bg-brandCard border border-brandBorder p-6 hover:border-brandGold/40 transition">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-brandGold text-sm">Au</span>
-            <span class="font-bold text-white">XAU/USD (Gold)</span>
-          </div>
-          <span class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-brandRed/10 text-brandRed border border-brandRed/20">SELL (SHORT)</span>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Feature 1 -->
+      <div class="p-8 rounded-3xl bg-brandCard border border-brandBorder hover:border-brandGold/40 transition">
+        <div class="w-14 h-14 rounded-2xl bg-brandGold/10 border border-brandGold/30 flex items-center justify-center text-brandGold text-2xl font-bold mb-6">
+          <i data-lucide="trending-up"></i>
         </div>
-        <div class="space-y-2 text-sm font-mono my-4 bg-brandDark/50 p-4 rounded-xl border border-brandBorder">
-          <div class="flex justify-between"><span class="text-slate-500">Entry:</span> <span class="text-white font-bold">$4,131.31</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Stop Loss:</span> <span class="text-brandRed">$4,135.91</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Target 1:</span> <span class="text-brandGreen">$4,126.71</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Target 2:</span> <span class="text-brandGreen">$4,123.03</span></div>
-        </div>
-        <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-2 border-t border-brandBorder">
-          <span>Setup: 15m BOS Trend</span>
-          <span class="text-brandGreen">● Target Hit (Full)</span>
-        </div>
+        <h3 class="text-xl font-bold text-white mb-2">Gold (XAU/USD) Breakout</h3>
+        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+          Scans higher-timeframe 15m structure shifts paired with 5m liquidity breaks. Strict $2.00–$4.50 pip protection to prevent drawdowns.
+        </p>
+        <ul class="space-y-2 text-xs font-mono text-slate-400 border-t border-brandBorder pt-4">
+          <li class="flex items-center gap-2"><span class="text-brandGreen">✔</span> London & NY Session Optimized</li>
+          <li class="flex items-center gap-2"><span class="text-brandGreen">✔</span> 1:1.8 Average Risk/Reward</li>
+        </ul>
       </div>
 
-      <!-- Nifty -->
-      <div class="rounded-2xl bg-brandCard border border-brandBorder p-6 hover:border-brandGreen/40 transition">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center font-bold text-brandGreen text-sm">₹</span>
-            <span class="font-bold text-white">NIFTY 50 22650 PE</span>
-          </div>
-          <span class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-brandRed/10 text-brandRed border border-brandRed/20">BUY PUT</span>
+      <!-- Feature 2 -->
+      <div class="p-8 rounded-3xl bg-brandCard border border-brandBorder hover:border-brandGreen/40 transition">
+        <div class="w-14 h-14 rounded-2xl bg-brandGreen/10 border border-brandGreen/30 flex items-center justify-center text-brandGreen text-2xl font-bold mb-6">
+          <i data-lucide="activity"></i>
         </div>
-        <div class="space-y-2 text-sm font-mono my-4 bg-brandDark/50 p-4 rounded-xl border border-brandBorder">
-          <div class="flex justify-between"><span class="text-slate-500">Spot Level:</span> <span class="text-white font-bold">₹22,593.40</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Option SL:</span> <span class="text-brandRed">-20 Pts</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Option Target:</span> <span class="text-brandGreen">+40 Pts</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Risk-to-Reward:</span> <span class="text-brandGreen">1:2.0 Fixed</span></div>
-        </div>
-        <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-2 border-t border-brandBorder">
-          <span>Setup: 15m ORB + 9 EMA</span>
-          <span class="text-brandGreen">● Target Hit (+40 pts)</span>
-        </div>
+        <h3 class="text-xl font-bold text-white mb-2">Nifty 50 ORB + 9 EMA</h3>
+        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+          Captures early morning volume explosions and tests dynamic 9 EMA pullbacks for Nifty index CE/PE strikes with defined 20-pt SL rules.
+        </p>
+        <ul class="space-y-2 text-xs font-mono text-slate-400 border-t border-brandBorder pt-4">
+          <li class="flex items-center gap-2"><span class="text-brandGreen">✔</span> Rule-Based 15-Minute ORB</li>
+          <li class="flex items-center gap-2"><span class="text-brandGreen">✔</span> +40 Pt Options Target Model</li>
+        </ul>
       </div>
 
-      <!-- Crypto -->
-      <div class="rounded-2xl bg-brandCard border border-brandBorder p-6 hover:border-brandBlue/40 transition">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center font-bold text-brandBlue text-sm">₿</span>
-            <span class="font-bold text-white">BTC/USD (Bitcoin)</span>
-          </div>
-          <span class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-brandGreen/10 text-brandGreen border border-brandGreen/20">BUY (LONG)</span>
+      <!-- Feature 3 -->
+      <div class="p-8 rounded-3xl bg-brandCard border border-brandBorder hover:border-brandBlue/40 transition">
+        <div class="w-14 h-14 rounded-2xl bg-brandBlue/10 border border-brandBlue/30 flex items-center justify-center text-brandBlue text-2xl font-bold mb-6">
+          <i data-lucide="crosshair"></i>
         </div>
-        <div class="space-y-2 text-sm font-mono my-4 bg-brandDark/50 p-4 rounded-xl border border-brandBorder">
-          <div class="flex justify-between"><span class="text-slate-500">Entry:</span> <span class="text-white font-bold">$85,570.00</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Stop Loss:</span> <span class="text-brandRed">$85,380.00</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Target 1:</span> <span class="text-brandGreen">$85,855.00</span></div>
-          <div class="flex justify-between"><span class="text-slate-500">Target 2:</span> <span class="text-brandGreen">$86,140.00</span></div>
-        </div>
-        <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-2 border-t border-brandBorder">
-          <span>Setup: SMC Liquidity Sweep</span>
-          <span class="text-brandBlue">● Runner Active</span>
-        </div>
+        <h3 class="text-xl font-bold text-white mb-2">Crypto SMC Sniper</h3>
+        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+          Finds retail trap liquidity sweeps across BTC, ETH, and SOL. Enters immediately when fake-outs occur to capture explosive reversal legs.
+        </p>
+        <ul class="space-y-2 text-xs font-mono text-slate-400 border-t border-brandBorder pt-4">
+          <li class="flex items-center gap-2"><span class="text-brandGreen">✔</span> 24/7 Non-stop scanning</li>
+          <li class="flex items-center gap-2"><span class="text-brandGreen">✔</span> Up to 1:3.0 Risk-to-Reward</li>
+        </ul>
       </div>
+    </div>
+  </section>
+
+  <!-- PRICING / PURCHASE PLANS -->
+  <section id="pricing" class="max-w-7xl mx-auto px-6 py-20 border-t border-brandBorder">
+    <div class="text-center mb-16">
+      <span class="text-brandGreen text-xs uppercase font-mono tracking-widest font-bold">Invest In Accuracy</span>
+      <h2 class="text-3xl sm:text-5xl font-black text-white mt-2">Get Your Algo Bot Access</h2>
+      <p class="text-slate-400 mt-3 max-w-xl mx-auto text-sm">Select a package below to connect directly with Ankit on Telegram and activate your bot.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
+      
+      <!-- Plan 1 -->
+      <div class="p-8 rounded-3xl bg-brandCard border border-brandBorder flex flex-col justify-between">
+        <div>
+          <span class="text-xs font-mono text-slate-400 uppercase font-bold">Monthly Pass</span>
+          <h3 class="text-2xl font-black text-white mt-2">Pro Signals</h3>
+          <p class="text-xs text-slate-500 mt-1">Direct Telegram VIP Channel access</p>
+          <div class="my-6">
+            <span class="text-4xl font-black text-white font-mono">₹2,999</span>
+            <span class="text-slate-500 text-sm">/ month</span>
+          </div>
+          <ul class="space-y-3 text-sm text-slate-300 font-sans mb-8">
+            <li class="flex items-center gap-2"><span class="text-brandGreen">✔</span> Gold & Crypto Live Alerts</li>
+            <li class="flex items-center gap-2"><span class="text-brandGreen">✔</span> Exact SL & Target calculations</li>
+            <li class="flex items-center gap-2"><span class="text-brandGreen">✔</span> 1:2 R:R trade setups</li>
+          </ul>
+        </div>
+        <a href="https://t.me/+QuDsbvz_kCc2MjQ1" target="_blank" class="w-full py-3.5 rounded-xl bg-brandBorder hover:bg-slate-700 text-white font-bold text-center block transition">
+          Purchase Monthly Pass
+        </a>
+      </div>
+
+      <!-- Plan 2 (Featured) -->
+      <div class="p-8 sm:p-10 rounded-3xl bg-gradient-to-b from-brandCard to-[#171f30] border-2 border-brandGreen relative flex flex-col justify-between shadow-2xl shadow-brandGreen/10 transform md:-translate-y-4">
+        <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-brandGreen text-brandDark font-black text-[11px] font-mono tracking-widest px-4 py-1 rounded-full uppercase">
+          Most Popular • Full Suite
+        </div>
+        <div>
+          <span class="text-xs font-mono text-brandGreen uppercase font-bold">Lifetime Software</span>
+          <h3 class="text-3xl font-black text-white mt-2">Algo Bot Engine</h3>
+          <p class="text-xs text-slate-400 mt-1">Own the full automated trading setup</p>
+          <div class="my-6">
+            <span class="text-5xl font-black text-white font-mono">₹9,999</span>
+            <span class="text-slate-400 text-sm">one-time</span>
+          </div>
+          <ul class="space-y-3 text-sm text-slate-200 font-sans mb-8">
+            <li class="flex items-center gap-2"><span class="text-brandGreen font-bold">✔</span> Gold, Nifty & Crypto Algorithms</li>
+            <li class="flex items-center gap-2"><span class="text-brandGreen font-bold">✔</span> Complete Deployment & Setup Support</li>
+            <li class="flex items-center gap-2"><span class="text-brandGreen font-bold">✔</span> Lifetime VIP Telegram Access</li>
+            <li class="flex items-center gap-2"><span class="text-brandGreen font-bold">✔</span> Free future strategy updates</li>
+          </ul>
+        </div>
+        <a href="https://t.me/+QuDsbvz_kCc2MjQ1" target="_blank" class="w-full py-4 rounded-xl bg-brandGreen hover:brightness-110 text-brandDark font-black text-center block transition shadow-lg shadow-brandGreen/25">
+          Buy Full Bot via Telegram
+        </a>
+      </div>
+
+      <!-- Plan 3 -->
+      <div class="p-8 rounded-3xl bg-brandCard border border-brandBorder flex flex-col justify-between">
+        <div>
+          <span class="text-xs font-mono text-slate-400 uppercase font-bold">Institutional Custom</span>
+          <h3 class="text-2xl font-black text-white mt-2">Custom Algo Build</h3>
+          <p class="text-xs text-slate-500 mt-1">Automate your own personal strategy</p>
+          <div class="my-6">
+            <span class="text-4xl font-black text-white font-mono">Custom</span>
+            <span class="text-slate-500 text-sm">pricing</span>
+          </div>
+          <ul class="space-y-3 text-sm text-slate-300 font-sans mb-8">
+            <li class="flex items-center gap-2"><span class="text-brandGreen">✔</span> Your strategy coded into Python</li>
+            <li class="flex items-center gap-2"><span class="text-brandGreen">✔</span> Zero-delay broker integration</li>
+            <li class="flex items-center gap-2"><span class="text-brandGreen">✔</span> Private 1-on-1 strategy consultation</li>
+          </ul>
+        </div>
+        <a href="https://t.me/+QuDsbvz_kCc2MjQ1" target="_blank" class="w-full py-3.5 rounded-xl bg-brandBorder hover:bg-slate-700 text-white font-bold text-center block transition">
+          Contact For Custom Build
+        </a>
+      </div>
+
     </div>
   </section>
 
   <!-- CTA BANNER -->
-  <section class="max-w-5xl mx-auto px-6 py-12 text-center w-full">
-    <div class="rounded-3xl bg-gradient-to-b from-brandCard to-brandBorder p-10 border border-brandBorder">
-      <h2 class="text-3xl font-extrabold text-white mb-4">Join Trade with Ankit</h2>
+  <section class="max-w-5xl mx-auto px-6 py-20 text-center">
+    <div class="rounded-3xl bg-gradient-to-r from-brandCard via-brandBorder to-brandCard p-12 border border-brandBorder relative overflow-hidden">
+      <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">Ready to Trade with an Algorithmic Edge?</h2>
       <p class="text-slate-400 max-w-xl mx-auto text-sm mb-8">
-        Get direct alerts for Gold, Nifty, and Crypto straight into your Telegram app.
+        Join our group today. Discuss your trading requirements directly with Ankit and get started immediately.
       </p>
-      <a href="https://t.me/+QuDsbvz_kCc2MjQ1" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-brandGreen text-brandDark font-extrabold text-base hover:brightness-110 transition shadow-xl shadow-brandGreen/25">
-        <i data-lucide="send" class="w-5 h-5"></i> Join Telegram Group
+      <a href="https://t.me/+QuDsbvz_kCc2MjQ1" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-brandGreen text-brandDark font-black text-base hover:brightness-110 transition shadow-xl shadow-brandGreen/25">
+        <i data-lucide="send" class="w-5 h-5"></i> Connect with Ankit on Telegram
       </a>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer class="border-t border-brandBorder py-8 bg-brandDark text-center text-xs font-mono text-slate-600">
-    <p>© 2026 QuantPulse Engine. Algorithmic trade models. Not SEBI registered financial advice.</p>
+    <p>© 2026 QuantPulse Engine • Trade with Ankit. All Rights Reserved.</p>
+    <p class="mt-2 text-[10px] text-slate-700 max-w-md mx-auto">Trading in financial markets carries risk. All strategies are algorithmic tools and do not constitute SEBI registered investment advice.</p>
   </footer>
 
   <script>
